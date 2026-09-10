@@ -1,6 +1,11 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Card from '@/components/shared/Card';
+import laboratoryImage from '@/components/public/images/Laboratory & Diagnostics.jpg';
+import kidneyDialysisImage from '@/components/public/images/Kidney & Dialysis Care.jpeg';
+import surgicalServicesImage from '@/components/public/images/Surgical Services.jpg';
+import outpatientConsultationImage from '@/components/public/images/Outpatient Consultation.jpg';
+import internalMedicineImage from '@/components/public/images/Internal Medicine.jpg';
 
 export const metadata: Metadata = {
   title: 'Services | Tanauan Medical Center',
@@ -19,22 +24,27 @@ const SERVICES = [
   {
     name: 'Laboratory & Diagnostics',
     description: 'Lab testing and diagnostic imaging via Lab To Go Medical & Diagnostic Center.',
+    image: laboratoryImage,
   },
   {
     name: 'Kidney & Dialysis Care',
     description: 'Dialysis services through the Malvar and Tanauan Kidney & Dialysis Centers.',
+    image: kidneyDialysisImage,
   },
   {
     name: 'Surgical Services',
     description: 'Inpatient and outpatient surgical procedures.',
+    image: surgicalServicesImage,
   },
   {
     name: 'Outpatient Consultation',
     description: 'General and specialist consultations, including at C.P. Reyes Satellite Clinic.',
+    image: outpatientConsultationImage,
   },
   {
     name: 'Internal Medicine',
     description: 'Diagnosis and treatment of adult illness and chronic conditions.',
+    image: internalMedicineImage,
   },
 ];
 
