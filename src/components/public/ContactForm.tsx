@@ -26,7 +26,7 @@ export default function ContactForm() {
         <label className="block text-sm font-medium text-gray-700">Full Name</label>
         <input
           {...register('fullName')}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900"
         />
         {errors.fullName && (
           <p className="mt-1 text-xs text-brand-red">{errors.fullName.message}</p>
@@ -37,7 +37,7 @@ export default function ContactForm() {
         <label className="block text-sm font-medium text-gray-700">Email</label>
         <input
           {...register('email')}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900"
         />
         {errors.email && <p className="mt-1 text-xs text-brand-red">{errors.email.message}</p>}
       </div>
@@ -47,7 +47,7 @@ export default function ContactForm() {
         <textarea
           {...register('message')}
           rows={5}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900"
         />
         {errors.message && <p className="mt-1 text-xs text-brand-red">{errors.message.message}</p>}
       </div>

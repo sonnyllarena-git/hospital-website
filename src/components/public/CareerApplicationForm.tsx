@@ -27,7 +27,7 @@ export default function CareerApplicationForm() {
         <label className="block text-sm font-medium text-gray-700">Full Name</label>
         <input
           {...register('fullName')}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900"
         />
         {errors.fullName && (
           <p className="mt-1 text-xs text-brand-red">{errors.fullName.message}</p>
@@ -38,7 +38,7 @@ export default function CareerApplicationForm() {
         <label className="block text-sm font-medium text-gray-700">Email</label>
         <input
           {...register('email')}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900"
         />
         {errors.email && <p className="mt-1 text-xs text-brand-red">{errors.email.message}</p>}
       </div>
@@ -47,7 +47,7 @@ export default function CareerApplicationForm() {
         <label className="block text-sm font-medium text-gray-700">Phone</label>
         <input
           {...register('phone')}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900"
         />
         {errors.phone && <p className="mt-1 text-xs text-brand-red">{errors.phone.message}</p>}
       </div>
@@ -56,7 +56,7 @@ export default function CareerApplicationForm() {
         <label className="block text-sm font-medium text-gray-700">Department</label>
         <select
           {...register('department')}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900"
         >
           <option value="Nursing">Nursing</option>
           <option value="Allied Health / Medical Technology">
@@ -72,7 +72,7 @@ export default function CareerApplicationForm() {
         <textarea
           {...register('message')}
           rows={4}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900"
         />
       </div>
 

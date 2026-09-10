@@ -85,6 +85,8 @@ the truth about whether the project is healthy. Until that command exists AND pa
 - [x] **TASK 13** — `src/app/health-library/page.tsx` — static article listing. **Pass:** page renders at `/health-library`; verify passes.
 - [x] **TASK 14** — `src/app/not-found.tsx` and `src/app/error.tsx`. **Pass:** hitting an unknown route shows the custom 404; verify passes.
 - [x] **TASK 15** — Per-page `metadata` exports, `src/app/sitemap.ts`, `src/app/robots.ts`. **Pass:** `/sitemap.xml` and `/robots.txt` resolve; verify passes.
+- [x] **TASK 16** — Live chat widget: `src/components/shared/TawkToWidget.tsx`, wired into `src/app/layout.tsx`, `.env.example`. Tawk.to (free tier), approved by Sonny 2026-09-10 over a custom AI bot. **Pass:** verify passes; widget renders nothing until real env vars are set (Claude cannot create the Tawk.to account — that step is Sonny's). *Follow-up owed to Sonny, not a Claude task: sign up at tawk.to, create a property, copy the Property ID/Widget ID from Administration > Channels > Chat Widget into `.env.local`.*
+- [x] **TASK 17** — Searchable doctor directory per `Photo references/UI/Find a Doctor.png` reference: `src/lib/doctors.ts` (100 generated MOCK doctors + specialization/HMO lookup tables), `src/components/public/DoctorDirectory.tsx` (surname/first-name search, specialization/sub-specialization/HMO dropdowns, A-Z index, pagination). Requested by Sonny 2026-09-10. **Pass:** verify passes; search/filter/pagination confirmed working live in browser; mock doctors clearly labeled as sample data. *2026-09-10: Sonny asked to remove the "Featured Doctors" (6 real/verified names) and "Other Departments" sections from this page — the directory below is now the entire page. The removed real doctor data still exists in git history (initial commit) if needed again.*
 
 ---
 
@@ -98,9 +100,6 @@ Anything here is out of scope until Sonny moves it up.
 - Performance optimisation — until something measurably needs it
 - Auth, payments, or any third-party integration not in the §2 stack
 - Additional dependencies, frameworks, or architectural layers
-- **Floating chatbot widget (bottom-right)** — requested by Sonny 2026-09-10. Needs a backend/AI
-  service decision (e.g. hosted widget vs. custom + LLM API) before it can be scoped as a real
-  task with a pass condition — raise with Sonny once the static site (TASK 1–15) is done.
 
 ---
 

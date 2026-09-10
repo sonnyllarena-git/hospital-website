@@ -132,6 +132,8 @@ you learn it, not after it bites.*
 
 ## Architecture Notes
 
+- [2026-09-10] Running `npm run build` while `npm run dev` is also active corrupts the shared `.next` directory on Windows (dev's incremental artifacts and build's production output collide) — the build itself can appear to pass, but the still-running dev server then 500s on every route (`Cannot find module './NNN.js'`, missing `routes-manifest.json`). Fix is `rm -rf .next` and restart dev cleanly. Never run `verify`/`build` while a dev server from the same project is live; stop it first.
+
 - [2026-09-10] `WebSearch` reported "unavailable" in this environment, but the Claude Browser tool (`mcp__Claude_Browser__navigate` to google.com/search) worked fine as a fallback for verifying real-world facts (facility addresses, Facebook handle) via Google Business listings and a PhilHealth PDF — cross-checked across multiple independent sources before treating as confirmed. C.P. Reyes Satellite Clinic turned out to be in Malvar, not Tanauan, despite the name — the earlier "to be confirmed" placeholder was correctly cautious rather than guessing wrong.
 
 - [2026-09-10] Don't simulate a color-override on a shared `Button` by appending conflicting utility classes via `className` (e.g. forcing a green-bg button white via `className="bg-white"`) — Tailwind's generated stylesheet order, not the className string order, decides which same-property class wins, so the override can silently fail. Added real `light`/`outlineLight` variants to `Button.tsx` instead, for use on dark/photo backgrounds.

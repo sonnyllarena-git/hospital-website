@@ -60,6 +60,7 @@ command you actually ran.
 | Styling | Tailwind CSS | 3.4.19 | Fast utility styling, matches existing plan docs |
 | Icons | @heroicons/react (outline set) | 2.2.0 | Matches the required monochrome-outline icon style, no hand-rolled cartoon icons |
 | Forms (Contact/Careers only) | React Hook Form + Zod | 7.87.0 / 3.25.76 | v1's only forms; validated input at the boundary |
+| Live chat | Tawk.to (hosted widget, free tier) | embed script, no npm package | Sonny approved 2026-09-10. Free hosted widget over a custom AI bot — avoids the medical-advice liability and backend/LLM cost a custom bot would need. Renders nothing until Sonny's own Property ID/Widget ID are set in `.env.local` |
 | State / data | none | — | No portal/dashboard in v1; nothing to hold client state for |
 | Backend | none | — | v1 is static/informational only |
 | Database | none | — | No data to persist in v1 |
