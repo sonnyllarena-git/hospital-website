@@ -2,16 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* This site has no dark theme — every color everywhere assumes a white page background, so we
+   deliberately don't follow prefers-color-scheme: dark (the create-next-app default did, and it
+   left inner pages with no explicit background rendering black text-on-black for dark-mode
+   visitors). Force light so it's consistent for every visitor regardless of OS/browser theme. */
 :root {
+  color-scheme: light;
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

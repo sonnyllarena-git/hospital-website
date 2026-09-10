@@ -7,7 +7,7 @@ export default function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <div key={pathname} className="animate-fadeIn">
+    <div key={pathname} className="flex flex-1 flex-col animate-fadeIn">
       {children}
     </div>
   );

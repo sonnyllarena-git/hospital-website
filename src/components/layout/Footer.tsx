@@ -1,8 +1,8 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-200 bg-white">
-      <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-gray-700">
-        <p className="font-semibold text-brand-green">Tanauan Medical Center</p>
+    <footer className="border-t border-brand-green-dark bg-brand-green">
+      <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-white/90">
+        <p className="font-semibold text-white">Tanauan Medical Center</p>
         <p className="mt-2">
           #41 A. Mabini Avenue, Barangay Poblacion IV, City of Tanauan, Batangas, 4232
         </p>
@@ -13,11 +13,11 @@ export default function Footer() {
           href="https://www.facebook.com/tanauanmedicalcenter"
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-2 inline-block font-medium hover:text-brand-green"
+          className="mt-2 inline-block font-medium text-white hover:text-brand-yellow"
         >
           Facebook: Tanauan Medical Center
         </a>
-        <p className="mt-6 text-xs text-gray-500">
+        <p className="mt-6 text-xs text-white/70">
           &copy; {new Date().getFullYear()} Tanauan Medical Center. All rights reserved.
         </p>
       </div>

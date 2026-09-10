@@ -1,34 +1,46 @@
 import type { Metadata } from 'next';
-import Card from '@/components/shared/Card';
+import Image from 'next/image';
+import hiringPeoplePhoto from '@/components/public/images/hiring-people-cutout.png';
+import JobBoard from '@/components/public/JobBoard';
 import CareerApplicationForm from '@/components/public/CareerApplicationForm';
 
 export const metadata: Metadata = {
   title: 'Careers | Tanauan Medical Center',
-  description: 'Join the Tanauan Medical Center team.',
+  description: 'Join the Tanauan Medical Center team — current openings and how to apply.',
 };
-
-const DEPARTMENTS = ['Nursing', 'Allied Health / Medical Technology', 'Administrative & Support'];
 
 export default function CareersPage() {
   return (
-    <main className="mx-auto max-w-4xl px-4 py-16">
-      <h1 className="text-3xl font-bold text-brand-green">Careers</h1>
-      <p className="mt-2 text-gray-600">
-        We are always looking for dedicated healthcare professionals to join our team. Send your
-        application below even if a specific opening isn&apos;t listed.
-      </p>
+    <main>
+      <section className="flex flex-col items-center justify-center gap-10 bg-brand-yellow px-4 py-16 sm:flex-row sm:px-16">
+        <Image
+          src={hiringPeoplePhoto}
+          alt="Tanauan Medical Center staff"
+          className="h-auto w-full max-w-2xl shrink-0"
+        />
+        <div className="text-center sm:text-left">
+          <h1 className="text-3xl font-bold text-brand-green">Careers</h1>
+          <p className="mt-2 max-w-xl text-gray-800">
+            We are always looking for dedicated healthcare professionals to join our team. Browse
+            current openings below, or send a general application even if a specific opening
+            isn&apos;t listed.
+          </p>
+          <p className="mt-6 text-4xl font-extrabold text-brand-green sm:text-5xl">WE ARE</p>
+          <p className="text-5xl font-extrabold text-brand-green sm:text-6xl">HIRING!</p>
+          <p className="mt-2 text-base font-bold text-brand-green sm:text-lg">
+            JOIN. GROW. MAKE AN IMPACT.
+          </p>
+        </div>
+      </section>
 
-      <div className="mt-10 grid gap-6 sm:grid-cols-3">
-        {DEPARTMENTS.map((department) => (
-          <Card key={department}>
-            <h2 className="text-base font-semibold text-brand-green">{department}</h2>
-            <p className="mt-2 text-sm text-gray-700">We welcome applications year-round.</p>
-          </Card>
-        ))}
+      <div className="mx-auto max-w-5xl px-4 py-12">
+        <JobBoard />
+
+        <h2 id="apply" className="mt-16 text-xl font-semibold text-brand-green">
+          Apply Now
+        </h2>
+        <CareerApplicationForm />
       </div>
-
-      <h2 className="mt-12 text-xl font-semibold text-brand-green">Apply Now</h2>
-      <CareerApplicationForm />
     </main>
   );
 }
