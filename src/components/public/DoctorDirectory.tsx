@@ -1,7 +1,14 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { MOCK_DOCTORS, SPECIALIZATION_NAMES, HMO_NAMES, ALPHABET } from '@/lib/doctors';
+import {
+  MOCK_DOCTORS,
+  SPECIALIZATION_NAMES,
+  HMO_NAMES,
+  ALPHABET,
+  type Doctor,
+} from '@/lib/doctors';
+import ScheduleVisitModal from './ScheduleVisitModal';
 
 const PAGE_SIZE_OPTIONS = [10, 20, 50];
 
@@ -14,6 +21,7 @@ export default function DoctorDirectory() {
   const [letter, setLetter] = useState('');
   const [pageSize, setPageSize] = useState(PAGE_SIZE_OPTIONS[1]);
   const [page, setPage] = useState(1);
+  const [bookingDoctor, setBookingDoctor] = useState<Doctor | null>(null);
 
   const subSpecializationOptions = useMemo(() => {
     const pool = specialization
@@ -170,18 +178,41 @@ export default function DoctorDirectory() {
 
         <ul>
           {visibleDoctors.map((doctor) => (
-            <li key={doctor.id} className="border-b border-gray-200 py-4">
-              <p className="text-sm font-medium text-gray-500">{doctor.firstName}</p>
-              <p className="text-xl font-bold text-brand-green">{doctor.lastName}</p>
-              <p className="mt-1 text-sm font-semibold uppercase text-gray-700">
-                {doctor.specialization}-({doctor.subSpecialization})
-              </p>
-              {doctor.hmoAccreditations.length > 0 && (
-                <div className="mt-2 text-sm text-gray-600">
-                  <p className="font-medium">HMO Accreditation:</p>
-                  <p>{doctor.hmoAccreditations.join(', ')}</p>
+            <li
+              key={doctor.id}
+              className="flex flex-col gap-4 border-b border-gray-200 py-4 sm:flex-row sm:justify-between"
+            >
+              <div>
+                <p className="text-sm font-medium text-gray-500">{doctor.firstName}</p>
+                <p className="text-xl font-bold text-brand-green">{doctor.lastName}</p>
+                <p className="mt-1 text-sm font-semibold uppercase text-gray-700">
+                  {doctor.specialization}-({doctor.subSpecialization})
+                </p>
+                {doctor.hmoAccreditations.length > 0 && (
+                  <div className="mt-2 text-sm text-gray-600">
+                    <p className="font-medium">HMO Accreditation:</p>
+                    <p>{doctor.hmoAccreditations.join(', ')}</p>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex flex-col items-center gap-2 text-center text-sm text-gray-600 sm:min-w-[220px]">
+                <button
+                  type="button"
+                  onClick={() => setBookingDoctor(doctor)}
+                  className="rounded-md bg-brand-green px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-green/90"
+                >
+                  Schedule a Visit
+                </button>
+                <div>
+                  <p className="font-medium text-gray-700">Clinic Schedule</p>
+                  {doctor.schedule.map((block) => (
+                    <p key={block.label}>
+                      {block.label}: {block.hours}
+                    </p>
+                  ))}
                 </div>
-              )}
+              </div>
             </li>
           ))}
           {visibleDoctors.length === 0 && (
@@ -215,6 +246,10 @@ export default function DoctorDirectory() {
           </div>
         )}
       </div>
+
+      {bookingDoctor && (
+        <ScheduleVisitModal doctor={bookingDoctor} onClose={() => setBookingDoctor(null)} />
+      )}
     </div>
   );
 }

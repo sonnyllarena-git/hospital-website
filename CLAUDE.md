@@ -42,7 +42,12 @@ command you actually ran.
 - **Where it runs:** Public internet, deployed to Vercel.
 - **Handles sensitive data?** No, in v1 — informational content only, plus a Contact/Careers form (name, email, phone, message/resume). No PHI. Patient/employee portal phases (later, out of scope now) will handle PHI and personal data and must get Data-Privacy/HIPAA-grade treatment when that work starts.
 - **Definition of done for v1:** The public site is live and responsive with Home, Find a Doctor, Services, Locations, About, Careers, Contact, and Health Library/News pages, matching hospital branding, with no login anywhere.
-- **Explicitly NOT in v1:** Patient portal (appointments, records, prescriptions, billing, telemedicine), employee portal (schedule, recognition wall, internal comms), HMO/insurance integration, n8n automation workflows, any backend or database, payments, authentication.
+- **Explicitly NOT in v1:** Patient portal (records, prescriptions, billing, telemedicine, login/accounts), employee portal (schedule, recognition wall, internal comms), HMO/insurance integration, n8n automation workflows, any real backend or database, payments, authentication.
+  - **Exception approved by Sonny (2026-09-10):** a "Schedule a Visit" appointment-request UI on the
+    Find a Doctor page IS in scope for v1, as a client-side-only demo — mock doctor schedules/
+    availability (hardcoded or `localStorage`, no server, no database), no real submission
+    endpoint, clearly a UI mockup rather than a live booking system. A real backend, persistence,
+    or actual appointment confirmation is still out of scope and still needs separate approval.
 - **Design constraint:** No cartoon-style or filled/flat illustration icons anywhere. Icons must be Heroicons-style monochrome outline (2px stroke, 24px grid, `currentColor`), per `icons src/` reference.
 
 ---

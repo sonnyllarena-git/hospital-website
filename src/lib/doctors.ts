@@ -2,6 +2,12 @@
 // reference). None of these 100 doctors are real — do not present this list as real physicians.
 // Replace with the actual physician roster before this page goes live.
 
+export type DoctorSchedule = {
+  weekdays: number[]; // 0 = Sunday .. 6 = Saturday
+  label: string;
+  hours: string;
+};
+
 export type Doctor = {
   id: string;
   firstName: string;
@@ -9,6 +15,7 @@ export type Doctor = {
   specialization: string;
   subSpecialization: string;
   hmoAccreditations: string[];
+  schedule: DoctorSchedule[];
 };
 
 const FIRST_NAMES = [
@@ -121,6 +128,20 @@ const HMO_PROVIDERS = [
   'Cocolife HMO',
 ];
 
+// MOCK weekly schedules for the demo booking modal — not real clinic hours. See CLAUDE.md §1
+// exception (2026-09-10): client-side-only booking UI, no real backend/availability system yet.
+const SCHEDULE_PATTERNS: DoctorSchedule[][] = [
+  [
+    { weekdays: [1, 2, 3, 4, 5], label: 'Mon - Fri', hours: '9:00 AM - 12:00 NN' },
+    { weekdays: [6], label: 'Saturday', hours: '1:00 PM - 4:00 PM' },
+  ],
+  [{ weekdays: [1, 3, 5], label: 'Mon, Wed, Fri', hours: '1:00 PM - 5:00 PM' }],
+  [
+    { weekdays: [2, 4], label: 'Tue, Thu', hours: '8:00 AM - 11:00 AM' },
+    { weekdays: [6], label: 'Saturday', hours: '9:00 AM - 12:00 NN' },
+  ],
+];
+
 const DOCTOR_COUNT = 100;
 
 export const MOCK_DOCTORS: Doctor[] = Array.from({ length: DOCTOR_COUNT }, (_, i) => {
@@ -139,9 +160,32 @@ export const MOCK_DOCTORS: Doctor[] = Array.from({ length: DOCTOR_COUNT }, (_, i
       { length: hmoCount },
       (_, j) => HMO_PROVIDERS[(i + j) % HMO_PROVIDERS.length]
     ),
+    schedule: SCHEDULE_PATTERNS[i % SCHEDULE_PATTERNS.length],
   };
 });
 
 export const SPECIALIZATION_NAMES = SPECIALIZATIONS.map((s) => s.name);
 export const HMO_NAMES = HMO_PROVIDERS;
 export const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+export type AvailabilityStatus = 'available' | 'limited' | 'full';
+
+// Deterministic MOCK availability so the same doctor+date always shows the same demo result —
+// not backed by any real appointment system. Swap for a real query once a backend exists.
+export function getMockAvailability(doctorId: string, dateStr: string): AvailabilityStatus {
+  const seed = `${doctorId}-${dateStr}`;
+  let hash = 0;
+  for (let i = 0; i < seed.length; i += 1) {
+    hash = (hash * 31 + seed.charCodeAt(i)) % 997;
+  }
+  if (hash % 6 === 0) return 'full';
+  if (hash % 3 === 0) return 'limited';
+  return 'available';
+}
+
+export function getScheduleForWeekday(
+  schedule: DoctorSchedule[],
+  weekday: number
+): DoctorSchedule | undefined {
+  return schedule.find((block) => block.weekdays.includes(weekday));
+}
