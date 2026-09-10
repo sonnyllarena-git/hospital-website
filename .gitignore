@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+build/
+
+# env files
+.env
+.env.local
+.env.*.local
+
+# misc
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+
+# testing / coverage
+coverage/
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+build
+coverage
+package-lock.json
+
+# planning docs and control files use hand-tuned markdown formatting
+*.md
+
+# reference material, not project source
+Photo references/
+icons src/
+Claude Loop Workflow - New Project Templates (Updated)/
