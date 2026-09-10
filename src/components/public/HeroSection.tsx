@@ -1,48 +1,21 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import Button from '@/components/shared/Button';
-import heroImage1 from '@/components/public/images/hero images 1.png';
-import heroImage2 from '@/components/public/images/Hero images 2.png';
-import heroImage3 from '@/components/public/images/Hero images 3.png';
 
-// Source photos are the hospital's own promotional graphics, shown at full clarity with no
-// overlay or card behind the text — a solid/translucent card looked wrong against whichever of
-// the 3 rotating photos was showing. Instead the text itself is white with a strong drop-shadow,
-// which stays legible against any busy or light-colored background.
-//
-// object-cover: fills the section edge-to-edge with no side letterboxing, at the cost of
-// cropping a sliver off top/bottom captions on very wide viewports.
-const BACKGROUND_IMAGES = [heroImage1, heroImage2, heroImage3];
+const HERO_VIDEO_SRC = '/images/POV_walk_into_hospital_lobby_20260910172235.mp4';
 
-const ROTATE_INTERVAL_MS = 5000;
-
+// Fixed to the source video's native 1918x845 resolution so the hero reads as a full banner
+// (fills the viewport width, cropped to that height) rather than resizing with the text content
+// like the old rotating-photo version — visitors scroll past it to reach the rest of the page.
+// No `loop`: the video autoplays once and holds on its last frame, per Sonny's direction.
 export default function HeroSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((index) => (index + 1) % BACKGROUND_IMAGES.length);
-    }, ROTATE_INTERVAL_MS);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <section className="relative flex flex-1 items-center justify-center overflow-hidden bg-white py-24 text-center sm:py-32">
-      {BACKGROUND_IMAGES.map((src, index) => (
-        <Image
-          key={src.src}
-          src={src}
-          alt=""
-          fill
-          sizes="100vw"
-          priority={index === 0}
-          className={`object-cover transition-opacity duration-1000 ${
-            index === activeIndex ? 'opacity-100' : 'opacity-0'
-          }`}
-        />
-      ))}
+    <section className="relative flex h-[845px] w-full items-center justify-center overflow-hidden bg-black text-center">
+      <video
+        src={HERO_VIDEO_SRC}
+        autoPlay
+        muted
+        playsInline
+        className="absolute inset-0 h-full w-full object-cover"
+      />
       <div className="relative mx-4 px-4 text-brand-yellow [-webkit-text-stroke:0.75px_black] [text-shadow:0_2px_10px_rgb(0_0_0_/_90%)]">
         <div className="mx-auto h-1 w-16 bg-brand-yellow" />
         <h1 className="mt-6 text-7xl font-bold sm:text-8xl">Tanauan Medical Center</h1>
