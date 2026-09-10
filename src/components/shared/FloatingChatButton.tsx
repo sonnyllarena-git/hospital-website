@@ -16,9 +16,9 @@ export default function FloatingChatButton() {
         type="button"
         onClick={() => setIsOpen((open) => !open)}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
-        className="flex flex-col items-center gap-1"
+        className="group flex flex-col items-center gap-1"
       >
-        <span className="flex h-28 w-28 items-center justify-center overflow-hidden rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.45)]">
+        <span className="flex h-28 w-28 items-center justify-center overflow-hidden rounded-full shadow-[0_8px_20px_rgba(0,0,0,0.45)] transition-transform duration-200 group-hover:scale-105">
           <Image
             src="/images/chat logo.png"
             alt="Chat with Tanauan Medical Center"

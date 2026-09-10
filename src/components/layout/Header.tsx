@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
@@ -18,6 +19,9 @@ const NAV_LINKS = [
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isActiveLink = (href: string) =>
+    href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   return (
     <header className="sticky top-0 z-50 border-b border-brand-green-dark bg-brand-green">
@@ -32,7 +36,11 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-white/90 hover:text-brand-yellow"
+              className={`inline-block border-b-2 text-sm font-medium transition-transform duration-200 hover:scale-110 hover:text-brand-yellow ${
+                isActiveLink(link.href)
+                  ? 'border-brand-yellow text-brand-yellow'
+                  : 'border-transparent text-white/90'
+              }`}
             >
               {link.label}
             </Link>
@@ -56,7 +64,9 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-white/90 hover:text-brand-yellow"
+              className={`inline-block w-fit text-sm font-medium transition-transform duration-200 hover:scale-110 hover:text-brand-yellow ${
+                isActiveLink(link.href) ? 'text-brand-yellow' : 'text-white/90'
+              }`}
               onClick={() => setIsMenuOpen(false)}
             >
               {link.label}
