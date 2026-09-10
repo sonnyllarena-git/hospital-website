@@ -3,6 +3,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import PageTransition from '@/components/layout/PageTransition';
 import TawkToWidget from '@/components/shared/TawkToWidget';
+import FloatingChatButton from '@/components/shared/FloatingChatButton';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({
         <PageTransition>{children}</PageTransition>
         <Footer />
         <TawkToWidget />
+        <FloatingChatButton />
       </body>
     </html>
   );

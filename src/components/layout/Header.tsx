@@ -23,7 +23,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-brand-green-dark bg-brand-green">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         <Link href="/" className="flex items-center gap-2 text-lg font-bold text-white">
-          <Image src="/images/logo.jpg" alt="Tanauan Medical Center" width={40} height={40} />
+          <Image src="/images/logo.png" alt="Tanauan Medical Center" width={40} height={40} />
           Tanauan Medical Center
         </Link>
 

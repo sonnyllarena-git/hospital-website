@@ -12,11 +12,8 @@ import heroImage3 from '@/components/public/images/Hero images 3.png';
 // the 3 rotating photos was showing. Instead the text itself is white with a strong drop-shadow,
 // which stays legible against any busy or light-colored background.
 //
-// object-contain (not object-cover): these banners have captions right at the top/bottom edges
-// (e.g. "NEW EMERGENCY ROOM"), and object-cover crops those off whenever the section's aspect
-// ratio is wider than the image's own — which happens at wide viewports since the section's
-// height is driven by the text content, not the image. object-contain never crops; the section
-// background shows as letterboxing on the sides instead, which reads as intentional.
+// object-cover: fills the section edge-to-edge with no side letterboxing, at the cost of
+// cropping a sliver off top/bottom captions on very wide viewports.
 const BACKGROUND_IMAGES = [heroImage1, heroImage2, heroImage3];
 
 const ROTATE_INTERVAL_MS = 5000;
@@ -41,7 +38,7 @@ export default function HeroSection() {
           fill
           sizes="100vw"
           priority={index === 0}
-          className={`object-contain transition-opacity duration-1000 ${
+          className={`object-cover transition-opacity duration-1000 ${
             index === activeIndex ? 'opacity-100' : 'opacity-0'
           }`}
         />
