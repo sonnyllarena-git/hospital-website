@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import hiringPeoplePhoto from '@/components/public/images/hiring-people-cutout.png';
+import hiringPeoplePhoto from '@/components/public/images/hiring image.png';
 import JobBoard from '@/components/public/JobBoard';
 import CareerApplicationForm from '@/components/public/CareerApplicationForm';
 
@@ -12,13 +12,13 @@ export const metadata: Metadata = {
 export default function CareersPage() {
   return (
     <main>
-      <section className="flex flex-col items-center justify-center gap-10 bg-brand-yellow px-4 py-16 sm:flex-row sm:px-16">
+      <section className="flex flex-col items-center justify-center gap-10 bg-brand-yellow px-4 pt-6 sm:flex-row sm:items-end sm:px-16 sm:pt-8">
         <Image
           src={hiringPeoplePhoto}
           alt="Tanauan Medical Center staff"
           className="h-auto w-full max-w-2xl shrink-0"
         />
-        <div className="text-center sm:text-left">
+        <div className="text-center sm:self-center sm:text-left">
           <h1 className="text-3xl font-bold text-brand-green">Careers</h1>
           <p className="mt-2 max-w-xl text-gray-800">
             We are always looking for dedicated healthcare professionals to join our team. Browse
