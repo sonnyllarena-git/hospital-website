@@ -43,14 +43,14 @@ export default function HeroSection() {
           }`}
         />
       ))}
-      <div className="relative mx-4 px-4 text-brand-yellow [text-shadow:0_2px_10px_rgb(0_0_0_/_70%)]">
+      <div className="relative mx-4 px-4 text-brand-yellow [-webkit-text-stroke:0.75px_black] [text-shadow:0_2px_10px_rgb(0_0_0_/_90%)]">
         <div className="mx-auto h-1 w-16 bg-brand-yellow" />
         <h1 className="mt-6 text-7xl font-bold sm:text-8xl">Tanauan Medical Center</h1>
-        <p className="mx-auto mt-4 max-w-2xl text-2xl sm:text-3xl">
+        <p className="mx-auto mt-4 max-w-2xl text-3xl font-bold sm:text-4xl">
           Sa Kalusugan, Tanauan Medical Center ang Maaasahan — trusted, PhilHealth-accredited care
           in Tanauan, Batangas.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-4 [text-shadow:none]">
+        <div className="mt-8 flex flex-wrap justify-center gap-4 [-webkit-text-stroke:0px] [text-shadow:none]">
           <Button href="/find-a-doctor" variant="light">
             Find a Doctor
           </Button>
