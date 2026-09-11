@@ -33,6 +33,10 @@ export default function FloatingChatButton() {
   };
 
   const handleHoverStart = () => {
+    // Plays unmuted whenever the browser allows it. Before the page has seen a real click
+    // anywhere, browsers silently block unmuted autoplay on a hover — accepted as expected
+    // behavior rather than forcing a muted fallback; sound works normally on every hover once
+    // the page has had that first click (this button's own click included).
     videoRef.current?.play().catch(() => {});
     frameRef.current = requestAnimationFrame(loop);
   };
