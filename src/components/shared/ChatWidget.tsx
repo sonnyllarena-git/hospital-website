@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { GREETING, DISCLAIMER, AGREE_LABEL, SUGGESTED_QUESTIONS } from '@/lib/chatKnowledgeBase';
 import { getBotReply } from '@/lib/chatMatcher';
+import SpeakingAvatarVideo from './SpeakingAvatarVideo';
 
 type Message = {
   id: number;
@@ -21,6 +22,26 @@ let idCounter = 0;
 function nextId() {
   idCounter += 1;
   return idCounter;
+}
+
+// Named in priority order — the browser's own default voice varies (often a female one, e.g.
+// Chrome's "Zira" on Windows), so pick a known male voice explicitly instead of trusting it.
+const PREFERRED_MALE_VOICE_NAMES = [
+  'Google UK English Male',
+  'Microsoft David',
+  'Microsoft Mark',
+  'Microsoft Ryan',
+  'Daniel',
+  'Alex',
+  'Fred',
+];
+
+function pickMaleVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | undefined {
+  for (const name of PREFERRED_MALE_VOICE_NAMES) {
+    const match = voices.find((v) => v.name.includes(name));
+    if (match) return match;
+  }
+  return voices.find((v) => /\bmale\b/i.test(v.name) && !/\bfemale\b/i.test(v.name));
 }
 
 function now() {
@@ -41,14 +62,40 @@ export default function ChatWidget({ onClose }: { onClose: () => void }) {
   ]);
   const [agreed, setAgreed] = useState(false);
   const [input, setInput] = useState('');
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const voicesRef = useRef<SpeechSynthesisVoice[]>([]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
   }, [messages]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    // Voices often load asynchronously (empty on the first call) — keep the list current.
+    const updateVoices = () => {
+      voicesRef.current = window.speechSynthesis.getVoices();
+    };
+    updateVoices();
+    window.speechSynthesis.onvoiceschanged = updateVoices;
+    // Stop the assistant from still talking after the panel closes.
+    return () => window.speechSynthesis.cancel();
+  }, []);
+
   function appendMessage(msg: Omit<Message, 'id' | 'time'>) {
     setMessages((prev) => [...prev, { ...msg, id: nextId(), time: now() }]);
+  }
+
+  function speak(text: string) {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    const maleVoice = pickMaleVoice(voicesRef.current);
+    if (maleVoice) utterance.voice = maleVoice;
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+    window.speechSynthesis.speak(utterance);
   }
 
   function handleAgree() {
@@ -73,6 +120,7 @@ export default function ChatWidget({ onClose }: { onClose: () => void }) {
           ? { label: reply.ctaLabel, href: reply.ctaHref }
           : undefined,
     });
+    speak(reply.text);
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -81,6 +129,8 @@ export default function ChatWidget({ onClose }: { onClose: () => void }) {
     ask(input);
     setInput('');
   }
+
+  const lastBotIndex = messages.map((m) => m.role).lastIndexOf('bot');
 
   return (
     <div className="flex h-[28rem] w-80 flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-2xl">
@@ -100,16 +150,26 @@ export default function ChatWidget({ onClose }: { onClose: () => void }) {
       </div>
 
       <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-gray-50 px-3 py-3">
-        {messages.map((message) => (
+        {messages.map((message, index) => (
           <div key={message.id} className={message.role === 'user' ? 'text-right' : 'text-left'}>
-            <div
-              className={`inline-block max-w-[85%] rounded-lg px-3 py-2 text-sm ${
-                message.role === 'user'
-                  ? 'bg-brand-green text-white'
-                  : 'border border-gray-200 bg-white text-gray-800'
-              }`}
-            >
-              {message.text}
+            <div className={message.role === 'bot' ? 'flex items-start gap-2' : ''}>
+              {message.role === 'bot' && index === lastBotIndex && (
+                <SpeakingAvatarVideo
+                  src="/images/ai chat box.mp4"
+                  speaking={isSpeaking}
+                  ariaLabel="Tanauan Medical Center Assistant"
+                  className="h-14 w-14 flex-shrink-0 drop-shadow-md"
+                />
+              )}
+              <div
+                className={`inline-block max-w-[75%] rounded-lg px-3 py-2 text-sm ${
+                  message.role === 'user'
+                    ? 'bg-brand-green text-white'
+                    : 'border border-gray-200 bg-white text-gray-800'
+                }`}
+              >
+                {message.text}
+              </div>
             </div>
             <p className="mt-0.5 text-[10px] text-gray-400">{message.time}</p>
 
