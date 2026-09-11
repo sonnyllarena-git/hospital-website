@@ -6,7 +6,7 @@
 > Phase 0 runs task-to-task automatically (CLAUDE.md §4.1) — no "go" needed between B and H.
 
 **Current task pointer:** _(Phase 1 complete — awaiting next roadmap with Sonny)_
-**Last verified:** 2026-09-10 — `npm run verify` → PASS, all 15 Phase 1 tasks complete, spot-checked live in browser
+**Last verified:** 2026-09-11 — `npm run verify` → PASS (TASK 40), confirmed live in browser
 **Verify command:** `npm run verify`
 
 ---
@@ -109,6 +109,7 @@ the truth about whether the project is healthy. Until that command exists AND pa
 - [x] **TASK 37** — Sonny found the hero subhead ("Sa Kalusugan...") hard to read — made it bigger/bolder (`text-2xl→text-3xl`, `sm:text-3xl→sm:text-4xl`, added `font-bold`), then switched it to white (`text-white`, overriding the inherited yellow) per Sonny's follow-up, keeping the stroke/shadow from the parent (`src/components/public/HeroSection.tsx`). **Pass:** format/lint pass (build skipped, same concurrent-session reason); confirmed live after each change.
 - [x] **TASK 38** — Hero subhead iterated further per Sonny: switched to `text-brand-green` with a white stroke override (`[-webkit-text-stroke:1px_white]`), then reduced both that stroke and the headline's black stroke by 25% (`1px` → `0.75px`) for a lighter, less heavy outline (`src/components/public/HeroSection.tsx`). **Pass:** format/lint pass (build skipped, same concurrent-session reason); confirmed live after each change.
 - [x] **TASK 39** — Reverted the hero subhead back to yellow (Sonny's request) — removed the green color and white-stroke overrides entirely rather than just swapping the color, since a white stroke has poor contrast on yellow; it now fully inherits the parent's yellow/black-stroke/shadow like the headline. Also increased the shared drop-shadow opacity `70%` → `90%` for more depth (`src/components/public/HeroSection.tsx`). **Pass:** format/lint pass (build skipped, same concurrent-session reason); confirmed live — subhead matches headline color, shadow visibly stronger.
+- [x] **TASK 40** — Replaced the floating chat launcher's static image with Sonny's 4-second "ai chat.mp4" avatar clip (`public/images/ai chat.mp4`, `src/components/shared/FloatingChatButton.tsx`): hover (or tap, for touch devices with no hover state) plays the video unmuted from the start; moving off pauses and rewinds to frame 0 so it always replays from the beginning next time, rather than resuming mid-clip. The source video has a solid dark background baked in with no real alpha channel — sampling showed it isn't a flat keyable color (it ranges from near-black to light blue across the clip) and a global luminance key erased dark subject pixels too (Sonny caught the doctor's hair turning gray), so background removal is done per-frame on a canvas via a border-connected flood-fill (same border-touching-mask approach already used for photo cutouts per LESSONS.md) — only darkness connected to the frame's edge is cleared, real dark subject areas are left alone. **Pass:** verify passes; confirmed live — no black box behind the launcher, hover/tap plays with audio, always restarts from frame 0.
 
 ---
 
