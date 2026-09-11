@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { keyOutBackground } from '@/lib/videoKeying';
 import ChatWidget from './ChatWidget';
 
@@ -10,6 +11,7 @@ const CANVAS_SIZE = 160; // keeps the per-frame flood-fill cheap
 // own close button) opens above it, rather than the icon itself flipping to an X.
 export default function FloatingChatButton() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasFrame, setHasFrame] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameRef = useRef<number>(0);
@@ -25,6 +27,7 @@ export default function FloatingChatButton() {
     const frame = ctx.getImageData(0, 0, CANVAS_SIZE, CANVAS_SIZE);
     keyOutBackground(frame.data, CANVAS_SIZE);
     ctx.putImageData(frame, 0, 0);
+    setHasFrame(true);
   };
 
   const loop = () => {
@@ -87,10 +90,23 @@ export default function FloatingChatButton() {
             onSeeked={drawFrame}
             className="hidden"
           />
+          {!hasFrame && (
+            // Mobile browsers (iOS Safari especially) don't load any video data — not even the
+            // first frame — until the user has actually interacted with the page, no matter what
+            // `preload` says. Without this, the launcher is blank on a first visit until tapped.
+            // This is a frame already extracted from the same clip, so the swap is seamless.
+            <Image
+              src="/images/chat-avatar.png"
+              alt="Chat with Tanauan Medical Center"
+              width={112}
+              height={112}
+              className="h-full w-full drop-shadow-md"
+            />
+          )}
           <canvas
             ref={canvasRef}
             aria-label="Chat with Tanauan Medical Center"
-            className="h-full w-full drop-shadow-md"
+            className={`h-full w-full drop-shadow-md ${hasFrame ? '' : 'hidden'}`}
           />
         </span>
         <span className="rounded-full bg-brand-green px-3 py-1 text-xs font-semibold text-white shadow">
