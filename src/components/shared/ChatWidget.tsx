@@ -87,11 +87,10 @@ export default function ChatWidget({ onClose }: { onClose: () => void }) {
       <div className="flex items-center justify-between bg-brand-green px-4 py-3">
         <div className="flex items-center gap-2">
           <Image
-            src="/images/chat logo.png"
+            src="/images/chat-avatar.png"
             alt="Tanauan Medical Center"
             width={32}
             height={32}
-            className="rounded-full"
           />
           <p className="text-sm font-semibold text-white">Tanauan Medical Center Assistant</p>
         </div>

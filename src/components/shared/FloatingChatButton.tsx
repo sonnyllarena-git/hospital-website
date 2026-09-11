@@ -121,7 +121,7 @@ export default function FloatingChatButton() {
           <canvas
             ref={canvasRef}
             aria-label="Chat with Tanauan Medical Center"
-            className="h-full w-full"
+            className="h-full w-full drop-shadow-md"
           />
         </span>
         <span className="rounded-full bg-brand-green px-3 py-1 text-xs font-semibold text-white shadow">
